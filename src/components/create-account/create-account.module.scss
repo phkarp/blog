@@ -1,0 +1,73 @@
+.create-account {
+  width: 384px;
+  height: 600px;
+  background: white;
+  padding: 48px 32px;
+  font-family: Roboto, sans-serif;
+
+  h2 {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 21px;
+    font-weight: 500;
+  }
+
+  label {
+    display: inline-block;
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 2px;
+    line-height: 22px;
+  }
+
+  input {
+    display: block;
+    width: 320px;
+    height: 40px;
+    margin-bottom: 12px;
+    border: 1px solid #D9D9D9;
+    border-radius: 5px;
+
+    &::placeholder {
+      color: #D9D9D9;
+      padding-left: 10px;
+      font-size: 16px;
+    }
+
+    &[type="checkbox"] {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+    }
+
+    &[type="submit"] {
+      background-color: #1890FF;
+      color: white;
+      font-size: 16px;
+      border: none;
+    }
+  }
+
+  span {
+    font-size: 12px;
+    color: #D9D9D9;
+
+    a {
+      color: #1890FF;
+    }
+  }
+
+
+
+  .personal-information {
+    display: flex;
+    border-top: 1px solid #D9D9D9;
+    padding-top: 8px;
+    margin: 5px 0 21px 0;
+    font-size: 14px;
+
+    input {
+      margin-right: 10px;
+    }
+  }
+}

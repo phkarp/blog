@@ -1,0 +1,24 @@
+.App {
+  text-align: center;
+  background-color: #EBEEF3;
+  min-height: 100vh;
+
+  :global {
+
+    .ant-pagination {
+      a {
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+      }
+    }
+
+  .ant-pagination-item-active {
+    background-color: #1890FF;
+    border-color: #1890FF;
+    a {
+      color: #EBEEF3;
+    }
+
+    }
+  }
+}
