@@ -1,9 +1,12 @@
-.create-account {
+.edit-profile {
   width: 384px;
-  height: 600px;
+  height: 498px;
   background: white;
   padding: 48px 32px;
   font-family: Roboto, sans-serif;
+  margin: 59px auto auto auto;
+  box-shadow: 0 0 10px 0 #c3c3c5;
+  border-radius: 5px;
 
   h2 {
     display: block;
@@ -27,10 +30,10 @@
     margin-bottom: 12px;
     border: 1px solid #D9D9D9;
     border-radius: 5px;
+    padding: 0 10px;
 
     &::placeholder {
       color: #D9D9D9;
-      padding-left: 10px;
       font-size: 16px;
     }
 
@@ -45,29 +48,6 @@
       color: white;
       font-size: 16px;
       border: none;
-    }
-  }
-
-  span {
-    font-size: 12px;
-    color: #D9D9D9;
-
-    a {
-      color: #1890FF;
-    }
-  }
-
-
-
-  .personal-information {
-    display: flex;
-    border-top: 1px solid #D9D9D9;
-    padding-top: 8px;
-    margin: 5px 0 21px 0;
-    font-size: 14px;
-
-    input {
-      margin-right: 10px;
     }
   }
 }

@@ -1,4 +1,9 @@
 .article-list {
   width: 938px;
   margin: 26px auto 0 auto;
+
+   > div {
+      box-shadow: 0 0 10px 0 #c3c3c5;
+      border-radius: 0 5px 5px 0;
+  }
 }

@@ -1,10 +1,10 @@
 import { FC } from 'react';
 
-import classes from './create-account.module.scss';
+import classes from './sign-up.module.scss';
 
-export const CreateAccount: FC = () => {
+export const SignUp: FC = () => {
   return (
-    <div className={classes['create-account']}>
+    <div className={classes['sign-up']}>
       <form>
         <h2>Create new account</h2>
         <label>

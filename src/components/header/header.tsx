@@ -1,6 +1,8 @@
+import { FC } from 'react';
+
 import classes from './header.module.scss';
 
-const Header = () => {
+const Header: FC = () => {
   return (
     <div className={classes.header}>
       <span>Realworld Blog</span>

@@ -1,0 +1,56 @@
+.sign-in {
+  width: 384px;
+  height: 374px;
+  background: white;
+  padding: 48px 32px;
+  font-family: Roboto, sans-serif;
+  margin: 59px auto auto auto;
+  box-shadow: 0 0 10px 0 #c3c3c5;
+  border-radius: 5px;
+
+  h2 {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 21px;
+    font-weight: 500;
+  }
+
+  label {
+    display: inline-block;
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 2px;
+    line-height: 22px;
+  }
+
+  input {
+    display: block;
+    width: 320px;
+    height: 40px;
+    margin-bottom: 12px;
+    border: 1px solid #D9D9D9;
+    border-radius: 5px;
+    padding: 0 10px;
+
+    &::placeholder {
+      color: #D9D9D9;
+      font-size: 16px;
+    }
+
+    &[type="submit"] {
+      background-color: #1890FF;
+      color: white;
+      font-size: 16px;
+      border: none;
+    }
+  }
+
+  span {
+    font-size: 12px;
+    color: #D9D9D9;
+
+    a {
+      color: #1890FF;
+    }
+  }
+}
