@@ -3,8 +3,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ResponseArticles } from '../types/article';
 import { getArticles } from '../services/get-articles';
 
-export const fetchArticles = createAsyncThunk('content/fetchArticles', async function () {
-  const response: ResponseArticles = await getArticles();
+export const fetchArticles = createAsyncThunk('content/fetchArticles', async function (offset: number) {
+  const response: ResponseArticles = await getArticles(offset);
 
   if (response) {
     return response;

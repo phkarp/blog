@@ -7,20 +7,38 @@ import { fetchArticles } from './articleThunk';
 interface IInitialState {
   articles: Article[];
   articlesCount: number;
+  offset: number;
+  loading: boolean;
+  errors: boolean;
 }
 
-const initialState: IInitialState = { articles: [], articlesCount: 0 };
+const initialState: IInitialState = { articles: [], articlesCount: 0, offset: 0, loading: false, errors: false };
 
 const articlesSlice = createSlice({
   name: 'articles',
   initialState,
-  reducers: {},
+  reducers: {
+    changePagination: (state, action) => {
+      const { page, pageSize } = action.payload;
+      state.offset = pageSize * (page - 1);
+    },
+  },
   extraReducers: builder => {
-    builder.addCase(fetchArticles.fulfilled, (state, action) => {
-      state.articles = action.payload.articles;
-      state.articlesCount = action.payload.articlesCount;
-    });
+    builder
+      .addCase(fetchArticles.pending, state => {
+        state.loading = true;
+      })
+      .addCase(fetchArticles.fulfilled, (state, action) => {
+        state.articles = action.payload.articles;
+        state.articlesCount = action.payload.articlesCount;
+        state.loading = false;
+      })
+      .addCase(fetchArticles.rejected, state => {
+        state.errors = true;
+      });
   },
 });
+
+export const { changePagination } = articlesSlice.actions;
 
 export default articlesSlice.reducer;
