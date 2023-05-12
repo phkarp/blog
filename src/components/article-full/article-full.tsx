@@ -5,7 +5,7 @@ import { ArticleCard } from '../article-card/article-card';
 export const ArticleFull: FC = () => {
   return (
     <div>
-      <ArticleCard />
+      {/*<ArticleCard />*/}
       <div>Текст статьи</div>
     </div>
   );

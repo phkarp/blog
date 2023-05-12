@@ -1,36 +1,39 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Tag } from 'antd';
+import { format } from 'date-fns';
+
+import { Article } from '../../types/article';
 
 import classes from './article-card.module.scss';
 import like from './heart.svg';
-import avatar from './Rectangle 1.svg';
 
-export const ArticleCard: FC = () => {
+export const ArticleCard: FC<{ article: Article }> = props => {
+  const { article } = props;
+  const { favoritesCount, tagList, description, title, author, createdAt } = article;
+  const { username, image } = author;
+
+  const tags = tagList.map((tag, index) => <Tag key={index}>{tag}</Tag>);
+
+  const dateCreated = format(new Date(createdAt), 'LLLL d, yyyy');
+
   return (
     <div className={classes.article}>
       <div className={classes['article-body']}>
         <div className={classes['header']}>
-          <a>Some article title</a>
+          <a>{title}</a>
           <div className={classes.heart}></div>
           <img src={String(like)} />
-          <div>12</div>
+          <div>{favoritesCount}</div>
         </div>
-        <div>
-          <Tag>tag 1</Tag>
-          <Tag>tag 2</Tag>
-        </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat.
-        </p>
+        <div>{tags}</div>
+        <p>{description}</p>
       </div>
       <div className={classes['person-info']}>
         <div>
-          <div className={classes.name}>John Doe</div>
-          <div className={classes.date}>March 5, 2020 </div>
+          <div className={classes.name}>{username}</div>
+          <div className={classes.date}>{dateCreated}</div>
         </div>
-        <img src={String(avatar)} />
+        <img src={String(image)} />
       </div>
     </div>
   );
