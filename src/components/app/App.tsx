@@ -28,7 +28,7 @@ function App() {
   return (
     <div className={classes.App}>
       <Header />
-      {/*<ArticleFull />*/}
+      <ArticleFull />
       {/*<SignUp />*/}
       {/*<SignIn />*/}
       {/*<EditProfile />*/}

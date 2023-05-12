@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { Article } from '../types/article';
 
-import { fetchArticles } from './articleThunk';
+import { fetchArticles, fetchFullArticle } from './articleThunk';
 
 interface IInitialState {
   articles: Article[];
@@ -10,6 +10,7 @@ interface IInitialState {
   offset: number;
   loading: boolean;
   errors: boolean;
+  fullCurrentArticle?: Article;
 }
 
 const initialState: IInitialState = { articles: [], articlesCount: 0, offset: 0, loading: false, errors: false };
@@ -35,6 +36,12 @@ const articlesSlice = createSlice({
       })
       .addCase(fetchArticles.rejected, state => {
         state.errors = true;
+      })
+      .addCase(fetchFullArticle.fulfilled, (state, action) => {
+        state.fullCurrentArticle = action.payload;
+      })
+      .addCase(fetchFullArticle.rejected, () => {
+        console.log('error');
       });
   },
 });
