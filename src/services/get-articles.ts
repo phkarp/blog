@@ -10,6 +10,6 @@ export const getArticles = (offset = 0): Promise<ResponseArticles> => {
 export const getFullArticle = (slug: string) => {
   return fetch(`https://blog.kata.academy/api/articles/${slug}`)
     .then(res => res.json())
-    .then(res => res)
+    .then(res => res.article)
     .catch(err => console.error(err));
 };

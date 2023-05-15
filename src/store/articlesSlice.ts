@@ -13,7 +13,13 @@ interface IInitialState {
   fullCurrentArticle?: Article;
 }
 
-const initialState: IInitialState = { articles: [], articlesCount: 0, offset: 0, loading: false, errors: false };
+const initialState: IInitialState = {
+  articles: [],
+  articlesCount: 0,
+  offset: 0,
+  loading: false,
+  errors: false,
+};
 
 const articlesSlice = createSlice({
   name: 'articles',
@@ -38,6 +44,7 @@ const articlesSlice = createSlice({
         state.errors = true;
       })
       .addCase(fetchFullArticle.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.fullCurrentArticle = action.payload;
       })
       .addCase(fetchFullArticle.rejected, () => {

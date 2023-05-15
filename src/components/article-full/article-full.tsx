@@ -1,32 +1,36 @@
 import { FC, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Markdown from 'markdown-to-jsx';
 
 import { ArticleCard } from '../article-card/article-card';
 import { useAppDispatch, useAppSelector } from '../../hooks/hook';
 import { Loader } from '../loader/loader';
-import { getFullArticle } from '../../services/get-articles';
 import { fetchFullArticle } from '../../store/articleThunk';
+
+import classes from './article-full.module.scss';
 
 export const ArticleFull: FC = () => {
   const dispatch = useAppDispatch();
-  const { articles, fullCurrentArticle } = useAppSelector(state => state.articles);
+  const { slug } = useParams();
 
-  if (!articles.length) return <Loader />;
+  useEffect(() => {
+    if (slug) {
+      dispatch(fetchFullArticle(slug));
+    }
+  }, [slug]);
 
-  const currentArticle = articles[19];
+  const { fullCurrentArticle } = useAppSelector(state => state.articles);
 
-  // useEffect(() => {
-  //   dispatch(fetchFullArticle(currentArticle.slug));
-  // }, [fullCurrentArticle]);
-  //
-  // if (!fullCurrentArticle) {
-  //   return <Loader />;
-  // }
+  if (!fullCurrentArticle) {
+    return <Loader />;
+  }
 
   return (
-    <div>
-      <ArticleCard article={currentArticle} />
-      <div>{fullCurrentArticle ? fullCurrentArticle.description : 'описания нет'}</div>
+    <div className={classes.article}>
+      <ArticleCard article={fullCurrentArticle} />
+      <Markdown className={classes['article-body']}>
+        {fullCurrentArticle.body ? fullCurrentArticle.body : 'описания нет'}
+      </Markdown>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { FC, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Tag } from 'antd';
 import { format } from 'date-fns';
 
@@ -9,7 +10,7 @@ import like from './heart.svg';
 
 export const ArticleCard: FC<{ article: Article }> = props => {
   const { article } = props;
-  const { favoritesCount, tagList, description, title, author, createdAt } = article;
+  const { favoritesCount, tagList, description, title, author, createdAt, slug } = article;
   const { username, image } = author;
 
   const tags = tagList.map((tag, index) => <Tag key={index}>{tag}</Tag>);
@@ -20,7 +21,9 @@ export const ArticleCard: FC<{ article: Article }> = props => {
     <div className={classes.article}>
       <div className={classes['article-body']}>
         <div className={classes['header']}>
-          <a>{title}</a>
+          <Link to={`/articles/${slug}`} style={{ textDecoration: 'none' }}>
+            {title}
+          </Link>
           <div className={classes.heart}></div>
           <img src={String(like)} />
           <div>{favoritesCount}</div>

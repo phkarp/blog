@@ -14,25 +14,56 @@
 
   ul {
     list-style: none;
-    display: inline-block;
+    display: flex;
     margin: 16px 22px 13px auto;
 
     li {
-      display: inline-block;
-      width: 109px;
-      height: 51px;
-      line-height: 51px;
+      align-self: center;
+      display: block;
+      padding: 0;
+
+      &.log-out {
+        border: 1px solid black;
+        height: 51px;
+        border-radius: 5px;
+        line-height: 47px;
+      }
+
+      &.person {
+        display: flex;
+        align-items: center;
+        margin: 0 26px;
+
+        img {
+          margin-left: 13px;
+        }
+      }
 
       .link {
         font-family: 'Inter', sans-serif;
+        text-decoration: none;
+        text-transform: none;
+        color: black;
+        padding: 1.2em;
 
       }
     }
 
-    .link-active {
+    .selection {
       border: 1px solid #52C41A;
       border-radius: 5px;
       color: #52C41A;
+      line-height: 51px;
+
+      &.created-article {
+        line-height: 31px;
+      }
+
+
+      & > a {
+        color: #52C41A;
+      }
+
     }
   }
 
