@@ -14,6 +14,7 @@ export const SignUp: FC = () => {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
+
     const newUser = {
       user: {
         username,
@@ -21,12 +22,13 @@ export const SignUp: FC = () => {
         password,
       },
     };
+
     dispatch(fetchNewUser(newUser));
   };
 
   return (
     <div className={classes['sign-up']}>
-      <form>
+      <form onSubmit={onSubmit}>
         <h2>Create new account</h2>
         <label>
           Username
@@ -53,7 +55,7 @@ export const SignUp: FC = () => {
           <input type="checkbox" id="checkbox" />
           <label htmlFor="checkbox">I agree to the processing of my personal information</label>
         </div>
-        <input type="submit" value="Create" onClick={event => onSubmit(event)} />
+        <input type="submit" value="Create" />
         <span>
           Already have an account? <a>Sign In</a>.
         </span>
