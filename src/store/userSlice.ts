@@ -3,11 +3,14 @@ import { useNavigate } from 'react-router-dom';
 
 import { User } from '../types/user';
 
-import { fetchGetToken, fetchGetUser, fetchUpdateUser } from './userThunk';
+import { fetchGetToken, fetchGetUser, fetchNewUser, fetchUpdateUser } from './userThunk';
 
 interface InitialState {
   logged: boolean;
   user: User;
+  regError: { email?: string; username?: string } | false;
+  logError: { 'email or password': string } | false;
+  editError: { email?: string; username?: string } | false;
 }
 
 const initialUser = {
@@ -19,6 +22,9 @@ const initialUser = {
 const initialState: InitialState = {
   logged: false,
   user: initialUser,
+  regError: false,
+  logError: false,
+  editError: false,
 };
 
 const userSlice = createSlice({
@@ -34,11 +40,12 @@ const userSlice = createSlice({
   extraReducers: builder =>
     builder
       .addCase(fetchGetToken.fulfilled, (state, action) => {
-        if (action.payload.user) {
-          localStorage.setItem(`user`, JSON.stringify(action.payload.user));
-          state.logged = true;
+        if (action.payload.errors) {
+          state.logError = action.payload.errors;
         } else {
-          console.log('Повторите попытку, пользователь с такими данными не найден');
+          localStorage.setItem(`user`, JSON.stringify(action.payload.user));
+          state.logError = false;
+          state.logged = true;
         }
       })
       .addCase(fetchGetUser.fulfilled, (state, action) => {
@@ -46,14 +53,30 @@ const userSlice = createSlice({
 
         if (!user.image) user.image = '';
         if (!user.bio) user.bio = '';
+        user.logged = true;
 
         state.user = user;
         localStorage.setItem('user', JSON.stringify(user));
         state.logged = true;
       })
       .addCase(fetchUpdateUser.fulfilled, (state, action) => {
-        state.user = action.payload.user;
+        if (action.payload.errors) {
+          state.editError = action.payload.errors;
+        } else {
+          const { user } = action.payload.user;
+          state.user = user;
+          user.logged = true;
+          localStorage.setItem('user', JSON.stringify(user));
+        }
+      })
+      .addCase(fetchNewUser.fulfilled, (state, action) => {
+        if (action.payload.errors) {
+          state.regError = action.payload.errors;
+        } else {
+          state.regError = false;
+        }
       }),
 });
+
 export const { clickLogOut } = userSlice.actions;
 export default userSlice.reducer;

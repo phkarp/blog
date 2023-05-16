@@ -32,6 +32,10 @@
     border-radius: 5px;
     padding: 0 10px;
 
+    &.input-error {
+      border-color: red;
+    }
+
     &::placeholder {
       color: #D9D9D9;
       font-size: 16px;
@@ -43,6 +47,12 @@
       font-size: 16px;
       border: none;
     }
+  }
+
+
+  .error {
+    color: red;
+    font-size: 12px;
   }
 
   span {

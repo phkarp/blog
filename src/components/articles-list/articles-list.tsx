@@ -12,7 +12,7 @@ export const ArticlesList: FC = () => {
   const { articles, offset, articlesCount, loading } = useAppSelector(state => state.articles);
   const dispatch = useAppDispatch();
 
-  const currentPage: number = offset / 20 + 1;
+  const currentPage: number = offset / 5 + 1;
 
   const articleCards = articles.map((article, index) => <ArticleCard article={article} key={index} />);
 
@@ -25,7 +25,7 @@ export const ArticlesList: FC = () => {
         total={articlesCount ? articlesCount : 1}
         defaultCurrent={currentPage}
         showSizeChanger={false}
-        defaultPageSize={20}
+        defaultPageSize={5}
         hideOnSinglePage={true}
         onChange={(page, pageSize) => dispatch(changePagination({ page, pageSize }))}
       />

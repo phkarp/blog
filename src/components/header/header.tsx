@@ -11,12 +11,15 @@ const Header: FC = () => {
   const { logged, user } = useAppSelector(state => state.user);
   const { username, image } = user;
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   if (logged) {
     return (
       <div className={classes.header}>
-        <span>Realworld Blog</span>
+        <span>
+          <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
+            Realworld Blog
+          </Link>
+        </span>
         <ul>
           <li className={`${classes.selection} ${classes['created-article']}`}>
             <Link className={classes.link} to="/new" style={{ fontSize: 14 }}>
@@ -41,7 +44,11 @@ const Header: FC = () => {
 
   return (
     <div className={classes.header}>
-      <span>Realworld Blog</span>
+      <span>
+        <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
+          Realworld Blog
+        </Link>
+      </span>
       <ul>
         <li>
           <Link className={classes.link} to="/sign-in">

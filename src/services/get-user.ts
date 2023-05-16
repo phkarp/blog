@@ -5,7 +5,9 @@ export const postNewUser = (newUser: newUser) => {
     method: 'POST',
     headers: { 'Content-Type': 'application/json;charset=utf-8' },
     body: JSON.stringify(newUser),
-  }).then(res => res.json());
+  })
+    .then(res => res.json())
+    .catch(err => console.error(err));
 };
 
 export const getUserByToken = (token: string) => {
@@ -24,8 +26,6 @@ export const putUser = (user: UserUpdate) => {
 
     const { token } = userFromStorageObj;
 
-    console.log(userFromStorage);
-
     return fetch('https://blog.kata.academy/api/user', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json;charset=utf-8', Authorization: `Token ${token}` },
@@ -41,7 +41,7 @@ export const getToken = (user: {
     email: string;
     password: string;
   };
-}): Promise<{ user: User }> => {
+}) => {
   return fetch('https://blog.kata.academy/api/users/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json;charset=utf-8' },

@@ -22,7 +22,7 @@ import classes from './App.module.scss';
 function App() {
   const dispatch = useAppDispatch();
   const { offset, errors } = useAppSelector(state => state.articles);
-  const { logged } = useAppSelector(state => state.user);
+  const { logged, logError } = useAppSelector(state => state.user);
 
   useEffect(() => {
     dispatch(fetchArticles(offset));
@@ -41,7 +41,7 @@ function App() {
         loadUser(token);
       }
     }
-  }, [logged]);
+  }, [logged, logError]);
 
   return (
     <div className={classes.App}>

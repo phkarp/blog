@@ -1,30 +1,30 @@
-import { FC, FormEvent, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import { useAppDispatch } from '../../hooks/hook';
+import { useAppDispatch, useAppSelector } from '../../hooks/hook';
 import { fetchNewUser } from '../../store/userThunk';
+import { addServerErrors } from '../../utils/addServerErrors';
 
 import classes from './sign-up.module.scss';
 
 export const SignUp: FC = () => {
-  // const [username, setUsername] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [passwordRepeat, setPasswordRepeat] = useState('');
   const dispatch = useAppDispatch();
+  const { regError } = useAppSelector(state => state.user);
 
   const navigate = useNavigate();
+
   const {
     register,
     formState: { errors },
     handleSubmit,
     getValues,
+    setError,
   } = useForm({
     mode: 'all',
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     const newUser = {
       user: {
         username: data.username,
@@ -33,13 +33,21 @@ export const SignUp: FC = () => {
       },
     };
 
-    dispatch(fetchNewUser(newUser));
-    navigate('/sign-in');
+    const dataRequire = await dispatch(fetchNewUser(newUser));
+    if (!dataRequire.payload.errors) {
+      navigate('/sign-in');
+    }
   };
 
   const classNameError = (field: string) => {
     return errors[field]?.message ? classes['input-error'] : '';
   };
+
+  useEffect(() => {
+    if (regError) {
+      addServerErrors(regError, setError);
+    }
+  }, [regError]);
 
   return (
     <div className={classes['sign-up']}>

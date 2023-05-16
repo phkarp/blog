@@ -44,11 +44,7 @@ const articlesSlice = createSlice({
         state.errors = true;
       })
       .addCase(fetchFullArticle.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.fullCurrentArticle = action.payload;
-      })
-      .addCase(fetchFullArticle.rejected, () => {
-        console.log('error');
       });
   },
 });

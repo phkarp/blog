@@ -4,11 +4,16 @@ import { useAppSelector } from '../hooks/hook';
 
 const RequireAuth = (props: { children: any }) => {
   const location = useLocation();
-  const { logged } = useAppSelector(state => state.user);
+
   const { children } = props;
 
-  if (!logged) {
-    return <Navigate to="/sign-in" state={{ from: location }} />;
+  const user = localStorage.getItem('user');
+  if (user) {
+    const userObj = JSON.parse(user);
+
+    if (!userObj.logged) {
+      return <Navigate to="/sign-in" state={{ from: location }} />;
+    }
   }
 
   return children;
