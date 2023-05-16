@@ -14,16 +14,34 @@ import { SignIn } from '../sign-in/sign-in';
 import { SignUp } from '../sign-up/sign-up';
 import { EditProfile } from '../edit-profile/edit-profile';
 import { CreateArticle } from '../create-article/create-article';
+import { fetchGetUser } from '../../store/userThunk';
+import { RequireAuth } from '../../hoc/RequireAuth';
 
 import classes from './App.module.scss';
 
 function App() {
   const dispatch = useAppDispatch();
-  const { offset, loading, errors } = useAppSelector(state => state.articles);
+  const { offset, errors } = useAppSelector(state => state.articles);
+  const { logged } = useAppSelector(state => state.user);
 
   useEffect(() => {
     dispatch(fetchArticles(offset));
   }, [offset]);
+
+  useEffect(() => {
+    const userFromStorage = localStorage.getItem('user');
+
+    if (userFromStorage) {
+      const { token } = JSON.parse(userFromStorage);
+
+      const loadUser = (token: string) => {
+        dispatch(fetchGetUser(token));
+      };
+      if (token) {
+        loadUser(token);
+      }
+    }
+  }, [logged]);
 
   return (
     <div className={classes.App}>
@@ -34,8 +52,22 @@ function App() {
         <Route path="/articles/:slug" element={<ArticleFull />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/profile" element={<EditProfile />} />
-        <Route path="/new" element={<CreateArticle />} />
+        <Route
+          path="/profile"
+          element={
+            <RequireAuth>
+              <EditProfile />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/new"
+          element={
+            <RequireAuth>
+              <CreateArticle />
+            </RequireAuth>
+          }
+        />
       </Routes>
       {errors ? 'Server Error' : null}
     </div>

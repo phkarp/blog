@@ -1,6 +1,8 @@
 import { FC, FormEvent, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '../../hooks/hook';
+import { fetchGetToken } from '../../store/userThunk';
 
 import classes from './sign-in.module.scss';
 
@@ -9,8 +11,21 @@ export const SignIn: FC = () => {
   const [password, setPassword] = useState('');
   const dispatch = useAppDispatch();
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const fromPage = location.state?.from?.pathname || '/';
+
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
+    const dataOfUser = {
+      user: {
+        email,
+        password,
+      },
+    };
+    dispatch(fetchGetToken(dataOfUser));
+    navigate(fromPage);
   };
 
   return (
@@ -27,7 +42,11 @@ export const SignIn: FC = () => {
         </label>
         <input type="submit" value="Login" />
         <span>
-          Don`t have an account? <a>Sign Up</a>.
+          Don`t have an account?{' '}
+          <Link to="/sign-up" style={{ textDecoration: 'none' }}>
+            Sign Up
+          </Link>
+          .
         </span>
       </form>
     </div>

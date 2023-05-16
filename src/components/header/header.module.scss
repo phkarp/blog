@@ -29,16 +29,6 @@
         line-height: 47px;
       }
 
-      &.person {
-        display: flex;
-        align-items: center;
-        margin: 0 26px;
-
-        img {
-          margin-left: 13px;
-        }
-      }
-
       .link {
         font-family: 'Inter', sans-serif;
         text-decoration: none;
@@ -46,6 +36,19 @@
         color: black;
         padding: 1.2em;
 
+      }
+
+      .person {
+        display: flex;
+        align-items: center;
+        margin: 0 26px;
+        text-transform: none;
+        text-decoration: none;
+        color: black;
+
+        img {
+          margin-left: 13px;
+        }
       }
     }
 

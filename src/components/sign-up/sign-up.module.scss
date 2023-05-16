@@ -1,9 +1,7 @@
 .sign-up {
   width: 384px;
-  height: 600px;
   background: white;
   padding: 48px 32px;
-  font-family: Roboto, sans-serif;
   margin: 59px auto auto auto;
   box-shadow: 0 0 10px 0 #c3c3c5;
   border-radius: 5px;
@@ -37,6 +35,10 @@
       font-size: 16px;
     }
 
+    &.input-error {
+      border-color: red;
+    }
+
     &[type="checkbox"] {
       display: inline-block;
       width: 15px;
@@ -58,6 +60,11 @@
     a {
       color: #1890FF;
     }
+  }
+
+  .error {
+    color: red;
+    font-size: 12px;
   }
 
   .personal-information {
