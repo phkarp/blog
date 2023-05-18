@@ -3,7 +3,21 @@ import { FieldValues } from 'react-hook-form';
 import { ResponseArticles } from '../types/article';
 import { User } from '../types/user';
 
-export const articles = (offset = 0): Promise<ResponseArticles> => {
+export const articles = async (offset = 0): Promise<ResponseArticles> => {
+  const userFromLS = localStorage.getItem('user');
+  if (userFromLS) {
+    const user = JSON.parse(userFromLS);
+    const { token } = user;
+
+    return fetch(`https://blog.kata.academy/api/articles?limit=5&offset=${offset}`, {
+      method: 'GET',
+      headers: { Authorization: `Token ${token}` },
+    })
+      .then(res => res.json())
+      .then(res => res)
+      .catch(err => console.error(err));
+  }
+
   return fetch(`https://blog.kata.academy/api/articles?limit=5&offset=${offset}`)
     .then(res => res.json())
     .then(res => res)
@@ -63,5 +77,29 @@ export const updateArticle = async (slug: string, token: string, data: object) =
     },
     body: JSON.stringify(data),
   });
+  return await response.json();
+};
+
+export const postFavorite = async (slug: string, token: string) => {
+  const response = await fetch(`https://blog.kata.academy/api/articles/${slug}/favorite`, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json;charset=utf-8',
+      Authorization: `Token ${token}`,
+    },
+  });
+
+  return await response.json();
+};
+
+export const deleteFavorite = async (slug: string, token: string) => {
+  const response = await fetch(`https://blog.kata.academy/api/articles/${slug}/favorite`, {
+    method: 'DELETE',
+    headers: {
+      'Content-type': 'application/json;charset=utf-8',
+      Authorization: `Token ${token}`,
+    },
+  });
+
   return await response.json();
 };

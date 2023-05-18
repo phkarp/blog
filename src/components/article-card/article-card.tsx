@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Tag } from 'antd';
 import { format } from 'date-fns';
@@ -6,14 +6,20 @@ import { format } from 'date-fns';
 import { Article } from '../../types/article';
 import { useAppDispatch } from '../../hooks/hook';
 import { fetchDeleteArticle } from '../../store/articleThunk';
+import { deleteFavorite, postFavorite } from '../../services/articles';
+import { updateArticle } from '../../store/articlesSlice';
 
 import classes from './article-card.module.scss';
 import like from './heart.svg';
+import redLike from './red-heart.svg';
+import attention from './exclamation-circle.svg';
 
 export const ArticleCard: FC<{ article: Article; fullArticle: boolean }> = props => {
   const { article, fullArticle } = props;
+  const [visiblePopUp, setVisiblePopUp] = useState(false);
 
-  const { favoritesCount, tagList, description, title, author, createdAt, slug } = article;
+  const { tagList, description, title, author, createdAt, slug, favoritesCount, favorited } = article;
+
   const { username, image } = author;
 
   const navigate = useNavigate();
@@ -22,8 +28,42 @@ export const ArticleCard: FC<{ article: Article; fullArticle: boolean }> = props
 
   let buttons: ReactNode | null = null;
 
-  const onDelete = async (e: any) => {
+  const onDelete = (e: any) => {
     e.preventDefault();
+    if (visiblePopUp) {
+      setVisiblePopUp(false);
+    } else {
+      setVisiblePopUp(true);
+    }
+  };
+
+  const onFavorited = async () => {
+    const userFromLS = localStorage.getItem('user');
+    if (userFromLS) {
+      const user = JSON.parse(userFromLS);
+      const { token } = user;
+
+      if (favorited) {
+        const response = await deleteFavorite(slug, token).catch(err => console.error(err));
+        if (response) {
+          const { article } = response;
+          dispatch(updateArticle({ slug, article }));
+        }
+      } else {
+        const response = await postFavorite(slug, token).catch(err => console.error(err));
+        if (response) {
+          const { article } = response;
+          dispatch(updateArticle({ slug, article }));
+        }
+      }
+    }
+  };
+
+  const onClickNo = () => {
+    setVisiblePopUp(false);
+  };
+
+  const onClickYes = async () => {
     const response = await dispatch(fetchDeleteArticle(slug));
     if (response.payload) {
       navigate('/');
@@ -42,6 +82,23 @@ export const ArticleCard: FC<{ article: Article; fullArticle: boolean }> = props
           <Link className={classes.edit} to={`/articles/${slug}/edit`}>
             Edit
           </Link>
+          {visiblePopUp ? (
+            <div className={classes['are-you-sure']}>
+              <div className={classes.triangle}></div>
+              <img src={String(attention)} alt="" />
+              <span>Are you sure to delete this article?</span>
+              <div className={classes['button-yes-no']}>
+                <button className={classes.no} onClick={onClickNo}>
+                  No
+                </button>
+                <button className={classes.yes} onClick={onClickYes}>
+                  Yes
+                </button>
+              </div>
+            </div>
+          ) : (
+            ''
+          )}
         </div>
       );
     }
@@ -59,7 +116,7 @@ export const ArticleCard: FC<{ article: Article; fullArticle: boolean }> = props
             {title}
           </Link>
           <div className={classes.heart}></div>
-          <img src={String(like)} alt="" />
+          <img src={favorited ? String(redLike) : String(like)} alt="" className={classes.like} onClick={onFavorited} />
           <div>{favoritesCount}</div>
         </div>
         <div>{tags}</div>

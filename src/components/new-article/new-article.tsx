@@ -35,8 +35,6 @@ export const NewArticle: FC<PropsType> = props => {
     control,
   });
 
-  // const { fullCurrentArticle } = useAppSelector(state => state.articles);
-
   const tags = fields.map((field, i) => {
     return (
       <label className={classes.tag} key={field.id}>

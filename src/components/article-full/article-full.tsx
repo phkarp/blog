@@ -20,7 +20,6 @@ export const ArticleFull: FC = () => {
   }, [slug]);
 
   const { fullCurrentArticle } = useAppSelector(state => state.articles);
-  console.log(fullCurrentArticle);
 
   if (!fullCurrentArticle) {
     return <Loader />;

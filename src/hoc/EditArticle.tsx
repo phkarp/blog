@@ -42,7 +42,7 @@ export const EditArticle = () => {
       const user: UserLocalStorage = JSON.parse(userFromLS);
 
       if (slug) {
-        await updateArticle(slug, user.token, newData).catch(err => console.log(err));
+        await updateArticle(slug, user.token, newData).catch(err => console.error(err));
       }
     }
   };
