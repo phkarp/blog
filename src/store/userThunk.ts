@@ -1,11 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { newUser, UserUpdate } from '../types/user';
-import { getToken, getUserByToken, postNewUser, putUser } from '../services/get-user';
+import { getToken, getUserByToken, postNewUser, putUser } from '../services/user';
 
 export const fetchNewUser = createAsyncThunk('user/fetchNewUser', async function (newUser: newUser) {
-  const response = await postNewUser(newUser);
-  return response;
+  return await postNewUser(newUser);
 });
 
 export const fetchGetToken = createAsyncThunk(

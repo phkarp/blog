@@ -29,6 +29,9 @@ const articlesSlice = createSlice({
       const { page, pageSize } = action.payload;
       state.offset = pageSize * (page - 1);
     },
+    unmountingArticle: state => {
+      delete state.fullCurrentArticle;
+    },
   },
   extraReducers: builder => {
     builder
@@ -49,6 +52,6 @@ const articlesSlice = createSlice({
   },
 });
 
-export const { changePagination } = articlesSlice.actions;
+export const { changePagination, unmountingArticle } = articlesSlice.actions;
 
 export default articlesSlice.reducer;

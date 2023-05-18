@@ -20,6 +20,7 @@ export const ArticleFull: FC = () => {
   }, [slug]);
 
   const { fullCurrentArticle } = useAppSelector(state => state.articles);
+  console.log(fullCurrentArticle);
 
   if (!fullCurrentArticle) {
     return <Loader />;
@@ -27,7 +28,7 @@ export const ArticleFull: FC = () => {
 
   return (
     <div className={classes.article}>
-      <ArticleCard article={fullCurrentArticle} />
+      <ArticleCard article={fullCurrentArticle} fullArticle={true} />
       <Markdown className={classes['article-body']}>
         {fullCurrentArticle.body ? fullCurrentArticle.body : 'описания нет'}
       </Markdown>

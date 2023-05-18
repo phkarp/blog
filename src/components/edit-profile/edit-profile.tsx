@@ -39,8 +39,7 @@ export const EditProfile: FC = () => {
       editedUser.password = data.password;
     }
 
-    const response = await dispatch(fetchUpdateUser({ user: editedUser }));
-    console.log(response);
+    await dispatch(fetchUpdateUser({ user: editedUser }));
   };
 
   const classNameError = (field: string) => {

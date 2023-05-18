@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { useNavigate } from 'react-router-dom';
 
 import { User } from '../types/user';
 
@@ -63,7 +62,7 @@ const userSlice = createSlice({
         if (action.payload.errors) {
           state.editError = action.payload.errors;
         } else {
-          const { user } = action.payload.user;
+          const { user } = action.payload;
           state.user = user;
           user.logged = true;
           localStorage.setItem('user', JSON.stringify(user));

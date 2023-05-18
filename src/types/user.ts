@@ -22,3 +22,7 @@ export type UserUpdate = {
     image: string;
   };
 };
+
+export interface UserLocalStorage extends User {
+  logged: boolean;
+}

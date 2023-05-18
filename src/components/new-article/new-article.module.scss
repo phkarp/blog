@@ -1,4 +1,4 @@
-.create-article {
+.new-article {
   width: 938px;
   background: white;
   padding: 48px 32px;
@@ -14,6 +14,16 @@
     font-size: 20px;
     margin-bottom: 21px;
     font-weight: 500;
+  }
+
+  .error {
+    color: red;
+    font-size: 12px;
+
+    &.tags {
+      position: relative;
+      bottom: 50px;
+    }
   }
 
   label {
@@ -41,10 +51,15 @@
     }
   }
 
+
+  .input-error {
+    border-color: red;
+  }
+
   input {
     width: 874px;
     height: 40px;
-    margin-bottom: 12px;
+    margin-bottom: 5px;
     border: 1px solid #D9D9D9;
     border-radius: 5px;
     padding: 0 10px;
@@ -62,6 +77,8 @@
       font-size: 16px;
       border: none;
     }
+
+
   }
 
 
@@ -69,6 +86,34 @@
     border: none;
     margin: 0;
     padding: 0;
+
+    button {
+      width: 120px;
+      height: 40px;
+      background: white;
+      border: 1px solid;
+      border-radius: 5px;
+      margin-left: 17px;
+
+
+      &.delete {
+        color: #F5222D;
+        border-color:  #F5222D;
+      }
+    }
+
+    .add-tag {
+      color: #1890FF;
+      border-color:  #1890FF;
+      margin: 10px;
+
+      &.add-last {
+        position: relative;
+        bottom: 47px;
+        left: 435px;
+        margin: 0 0 0 10px;
+      }
+    }
 
     legend {
       text-align: left;
@@ -83,25 +128,7 @@
         width: 300px;
       }
 
-      button {
-        width: 120px;
-        height: 40px;
-        background: white;
-        border: 1px solid;
-        border-radius: 5px;
-        margin-left: 17px;
 
-
-        &.delete {
-          color: #F5222D;
-          border-color:  #F5222D;
-        }
-
-        &.add-tag {
-          color: #1890FF;
-          border-color:  #1890FF;
-        }
-      }
 
     }
   }

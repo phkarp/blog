@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/hook';
 import { clickLogOut } from '../../store/userSlice';
@@ -22,14 +22,14 @@ const Header: FC = () => {
         </span>
         <ul>
           <li className={`${classes.selection} ${classes['created-article']}`}>
-            <Link className={classes.link} to="/new" style={{ fontSize: 14 }}>
+            <Link className={classes.link} to="/new-article" style={{ fontSize: 14 }}>
               Created article
             </Link>
           </li>
           <li>
             <Link to="/profile" className={classes.person}>
               <div className={classes.name}>{username ? username : 'Noname'}</div>
-              <img src={String(image ? image : image1)} />
+              <img src={String(image ? image : image1)} alt="" />
             </Link>
           </li>
           <li className={classes['log-out']}>

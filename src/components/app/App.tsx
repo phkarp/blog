@@ -2,20 +2,17 @@ import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import Header from '../header/header';
-// import { ArticlesList } from '../articles-list/articles-list';
 import { ArticleFull } from '../article-full/article-full';
-// import { SignIn } from '../sign-in/sign-in';
-// import { EditProfile } from '../edit-profile/edit-profile';
-// import { CreateArticle } from '../create-article/create-article';
 import { useAppDispatch, useAppSelector } from '../../hooks/hook';
 import { fetchArticles } from '../../store/articleThunk';
 import { ArticlesList } from '../articles-list/articles-list';
 import { SignIn } from '../sign-in/sign-in';
 import { SignUp } from '../sign-up/sign-up';
 import { EditProfile } from '../edit-profile/edit-profile';
-import { CreateArticle } from '../create-article/create-article';
 import { fetchGetUser } from '../../store/userThunk';
 import { RequireAuth } from '../../hoc/RequireAuth';
+import { CreateArticle } from '../../hoc/CreateArticle';
+import { EditArticle } from '../../hoc/EditArticle';
 
 import classes from './App.module.scss';
 
@@ -61,10 +58,18 @@ function App() {
           }
         />
         <Route
-          path="/new"
+          path="/new-article"
           element={
             <RequireAuth>
               <CreateArticle />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/articles/:slug/edit"
+          element={
+            <RequireAuth>
+              <EditArticle />
             </RequireAuth>
           }
         />
