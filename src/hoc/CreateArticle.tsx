@@ -19,10 +19,12 @@ export const CreateArticle = () => {
     };
 
     const response = await dispatch(fetchCreateArticle(dataRequire));
-    // console.log(response);
-    // if (response) {
-    //   navigate(`/articles/${response.article?.slug}`);
-    // }
+
+    if (response) {
+      const { article } = response.payload;
+      const { slug } = article;
+      navigate(`/articles/${slug}`);
+    }
   };
 
   return <NewArticle title="Create new article" submitHandler={onSubmit} />;

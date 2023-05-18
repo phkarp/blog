@@ -25,6 +25,20 @@ export const articles = async (offset = 0): Promise<ResponseArticles> => {
 };
 
 export const getFullArticle = (slug: string) => {
+  const userFromLS = localStorage.getItem('user');
+  if (userFromLS) {
+    const user = JSON.parse(userFromLS);
+    const { token } = user;
+
+    return fetch(`https://blog.kata.academy/api/articles/${slug}`, {
+      method: 'GET',
+      headers: { Authorization: `Token ${token}` },
+    })
+      .then(res => res.json())
+      .then(res => res.article)
+      .catch(err => console.error(err));
+  }
+
   return fetch(`https://blog.kata.academy/api/articles/${slug}`)
     .then(res => res.json())
     .then(res => res.article)

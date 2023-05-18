@@ -25,7 +25,7 @@ export const fetchFullArticle = createAsyncThunk('articles/fetchFullArticle', as
 });
 
 export const fetchCreateArticle = createAsyncThunk('articles/fetchCreateArticle', async function (data: FieldValues) {
-  return await postArticle(data);
+  return postArticle(data);
 });
 
 export const fetchDeleteArticle = createAsyncThunk('articles/fetchDeleteArticle', async function (slug: string) {

@@ -12,6 +12,8 @@ export const EditArticle = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
 
+  const [success, setSuccess] = useState(false);
+
   useEffect(() => {
     const fetchUser = async (slug: string) => {
       const article = await getFullArticle(slug);
@@ -24,8 +26,9 @@ export const EditArticle = () => {
         setCurrentArticle(article);
       }
     };
-
-    fetchUser(slug!).catch(err => console.error(err));
+    if (slug) {
+      fetchUser(slug).catch(err => console.error(err));
+    }
   }, []);
 
   const onSubmit = async (data: FieldValues) => {
@@ -42,7 +45,12 @@ export const EditArticle = () => {
       const user: UserLocalStorage = JSON.parse(userFromLS);
 
       if (slug) {
-        await updateArticle(slug, user.token, newData).catch(err => console.error(err));
+        const response = await updateArticle(slug, user.token, newData).catch(err => console.error(err));
+        if (response.article) {
+          setSuccess(true);
+        } else {
+          setSuccess(false);
+        }
       }
     }
   };
@@ -60,7 +68,27 @@ export const EditArticle = () => {
   }
 
   return currentArticle ? (
-    <NewArticle title="Edit article" submitHandler={onSubmit} defaultValues={currentArticle} />
+    <>
+      {success ? (
+        <div
+          style={{
+            position: 'fixed',
+            left: 50,
+            background: 'rgba(134, 176, 118,0.3)',
+            padding: 20,
+          }}>
+          <span>Статья отредактирована успешно</span>
+          <button
+            style={{ display: 'block', marginTop: 10, background: 'white', borderColor: 'green' }}
+            onClick={() => setSuccess(false)}>
+            закрыть уведомление
+          </button>
+        </div>
+      ) : (
+        ''
+      )}
+      <NewArticle title="Edit article" submitHandler={onSubmit} defaultValues={currentArticle} />
+    </>
   ) : (
     <Loader />
   );
