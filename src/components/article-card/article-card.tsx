@@ -30,33 +30,28 @@ export const ArticleCard: FC<{ article: Article; fullArticle: boolean }> = props
 
   const onDelete = (e: any) => {
     e.preventDefault();
-    if (visiblePopUp) {
-      setVisiblePopUp(false);
-    } else {
-      setVisiblePopUp(true);
-    }
+
+    setVisiblePopUp(!visiblePopUp);
   };
 
   const onFavorited = async () => {
     const userFromLS = localStorage.getItem('user');
-    if (userFromLS) {
-      const user = JSON.parse(userFromLS);
-      const { token } = user;
-
-      if (favorited) {
-        const response = await deleteFavorite(slug, token).catch(err => console.error(err));
-        if (response) {
-          const { article } = response;
-          dispatch(updateArticle({ slug, article }));
-        }
-      } else {
-        const response = await postFavorite(slug, token).catch(err => console.error(err));
-        if (response) {
-          const { article } = response;
-          dispatch(updateArticle({ slug, article }));
-        }
-      }
+    if (!userFromLS) {
+      navigate('/sign-in');
+      return;
     }
+
+    const user = JSON.parse(userFromLS);
+    const { token } = user;
+
+    const response = favorited
+      ? await deleteFavorite(slug, token).catch(err => console.error(err))
+      : await postFavorite(slug, token).catch(err => console.error(err));
+
+    if (!response) return;
+
+    const { article } = response;
+    dispatch(updateArticle({ slug, article }));
   };
 
   const onClickNo = () => {
@@ -65,9 +60,8 @@ export const ArticleCard: FC<{ article: Article; fullArticle: boolean }> = props
 
   const onClickYes = async () => {
     const response = await dispatch(fetchDeleteArticle(slug));
-    if (response.payload) {
-      navigate('/');
-    }
+    if (!response.payload) return;
+    navigate('/');
   };
 
   const user = localStorage.getItem('user');

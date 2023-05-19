@@ -28,16 +28,13 @@ function App() {
   useEffect(() => {
     const userFromStorage = localStorage.getItem('user');
 
-    if (userFromStorage) {
-      const { token } = JSON.parse(userFromStorage);
+    if (!userFromStorage) return;
 
-      const loadUser = (token: string) => {
-        dispatch(fetchGetUser(token));
-      };
-      if (token) {
-        loadUser(token);
-      }
-    }
+    const { token } = JSON.parse(userFromStorage);
+
+    if (!token) return;
+
+    dispatch(fetchGetUser(token));
   }, [logged, logError]);
 
   return (

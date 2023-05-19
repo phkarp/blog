@@ -14,9 +14,9 @@ export const ArticleFull: FC = () => {
   const { slug } = useParams();
 
   useEffect(() => {
-    if (slug) {
-      dispatch(fetchFullArticle(slug));
-    }
+    if (!slug) return;
+
+    dispatch(fetchFullArticle(slug));
   }, [slug]);
 
   const { fullCurrentArticle } = useAppSelector(state => state.articles);

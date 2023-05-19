@@ -44,9 +44,9 @@ export const SignUp: FC = () => {
   };
 
   useEffect(() => {
-    if (regError) {
-      addServerErrors(regError, setError);
-    }
+    if (!regError) return;
+
+    addServerErrors(regError, setError);
   }, [regError]);
 
   return (

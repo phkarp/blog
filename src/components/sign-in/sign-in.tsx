@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
@@ -36,18 +36,16 @@ export const SignIn: FC = () => {
 
     const dataRequired = await dispatch(fetchGetToken(dataOfUser));
 
-    if (!dataRequired.payload.errors) {
-      navigate(fromPage);
-    }
+    if (!dataRequired.payload.errors) navigate(fromPage);
   };
 
   useEffect(() => {
-    if (logError) {
-      setError('password', {
-        type: 'server',
-        message: 'email or password is invalid',
-      });
-    }
+    if (!logError) return;
+
+    setError('password', {
+      type: 'server',
+      message: 'email or password is invalid',
+    });
   }, [logError]);
 
   const classNameError = (field: string) => {

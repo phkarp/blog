@@ -5,6 +5,7 @@ import { User } from '../types/user';
 
 export const articles = async (offset = 0): Promise<ResponseArticles> => {
   const userFromLS = localStorage.getItem('user');
+
   if (userFromLS) {
     const user = JSON.parse(userFromLS);
     const { token } = user;
@@ -26,6 +27,7 @@ export const articles = async (offset = 0): Promise<ResponseArticles> => {
 
 export const getFullArticle = (slug: string) => {
   const userFromLS = localStorage.getItem('user');
+
   if (userFromLS) {
     const user = JSON.parse(userFromLS);
     const { token } = user;
@@ -47,6 +49,7 @@ export const getFullArticle = (slug: string) => {
 
 export const postArticle = (data: FieldValues) => {
   const userFromStorage = localStorage.getItem('user');
+
   if (userFromStorage) {
     const userFromStorageObj: User = JSON.parse(userFromStorage);
 
@@ -67,6 +70,7 @@ export const postArticle = (data: FieldValues) => {
 
 export const deleteArticle = (slug: string) => {
   const userFromStorage = localStorage.getItem('user');
+
   if (userFromStorage) {
     const userFromStorageObj: User = JSON.parse(userFromStorage);
 

@@ -21,6 +21,7 @@ export const getUserByToken = (token: string) => {
 
 export const putUser = (user: UserUpdate) => {
   const userFromStorage = localStorage.getItem('user');
+
   if (userFromStorage) {
     const userFromStorageObj: User = JSON.parse(userFromStorage);
 

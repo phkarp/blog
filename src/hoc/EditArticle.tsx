@@ -18,17 +18,18 @@ export const EditArticle = () => {
     const fetchUser = async (slug: string) => {
       const article = await getFullArticle(slug);
 
-      if (article) {
-        article.tagList = article.tagList.map((tag: string) => {
-          return { name: tag };
-        });
+      if (!article) return;
 
-        setCurrentArticle(article);
-      }
+      article.tagList = article.tagList.map((tag: string) => {
+        return { name: tag };
+      });
+
+      setCurrentArticle(article);
     };
-    if (slug) {
-      fetchUser(slug).catch(err => console.error(err));
-    }
+
+    if (!slug) return;
+
+    fetchUser(slug).catch(err => console.error(err));
   }, []);
 
   const onSubmit = async (data: FieldValues) => {
@@ -41,30 +42,26 @@ export const EditArticle = () => {
         tagList: data.tagList.map((tag: { name: string }) => tag.name),
       },
     };
-    if (userFromLS) {
-      const user: UserLocalStorage = JSON.parse(userFromLS);
+    if (!userFromLS) return;
+    const user: UserLocalStorage = JSON.parse(userFromLS);
 
-      if (slug) {
-        const response = await updateArticle(slug, user.token, newData).catch(err => console.error(err));
-        if (response.article) {
-          setSuccess(true);
-        } else {
-          setSuccess(false);
-        }
-      }
-    }
+    if (!slug) return;
+    const response = await updateArticle(slug, user.token, newData).catch(err => console.error(err));
+
+    response.article ? setSuccess(true) : setSuccess(false);
   };
 
-  if (currentArticle) {
-    const { author } = currentArticle;
-    const { username } = author;
-    const userFromLS = localStorage.getItem('user');
-    if (userFromLS) {
-      const user: UserLocalStorage = JSON.parse(userFromLS);
-      if (username !== user.username) {
-        navigate(`/articles/${slug}`);
-      }
-    }
+  if (!currentArticle) return <Loader />;
+  const { author } = currentArticle;
+  const { username } = author;
+  const userFromLS = localStorage.getItem('user');
+
+  if (!userFromLS) return <Loader />;
+
+  const user: UserLocalStorage = JSON.parse(userFromLS);
+
+  if (username !== user.username) {
+    navigate(`/articles/${slug}`);
   }
 
   return currentArticle ? (

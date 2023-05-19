@@ -8,7 +8,10 @@ import { addServerErrors } from '../../utils/addServerErrors';
 import classes from './edit-profile.module.scss';
 
 export const EditProfile: FC = () => {
-  const userFromStorage = localStorage.getItem('user')!;
+  const userFromStorage = localStorage.getItem('user');
+
+  if (!userFromStorage) return <div></div>;
+
   const { username, email, image } = JSON.parse(userFromStorage);
 
   const { editError } = useAppSelector(state => state.user);
@@ -47,9 +50,9 @@ export const EditProfile: FC = () => {
   };
 
   useEffect(() => {
-    if (editError) {
-      addServerErrors(editError, setError);
-    }
+    if (!editError) return;
+
+    addServerErrors(editError, setError);
   }, [editError]);
 
   return (
