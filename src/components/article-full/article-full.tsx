@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import Markdown from 'markdown-to-jsx';
 
 import { ArticleCard } from '../article-card/article-card';

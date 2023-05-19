@@ -1,12 +1,7 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Pagination } from 'antd';
 
 import { ArticleCard } from '../article-card/article-card';
-import { useAppDispatch, useAppSelector } from '../../hooks/hook';
-import { changePagination } from '../../store/articlesSlice';
-import { Loader } from '../loader/loader';
-import { fetchArticles } from '../../store/articleThunk';
-import { Article } from '../../types/article-types';
 import { ArticlesListProps } from '../../types/props-types';
 
 import classes from './articles-list.module.scss';
