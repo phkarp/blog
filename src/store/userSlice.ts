@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { User } from '../types/user';
+import { User } from '../types/user-types';
 
 import { fetchGetToken, fetchGetUser, fetchNewUser, fetchUpdateUser } from './userThunk';
 

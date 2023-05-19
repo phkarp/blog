@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { Article } from '../types/article';
+import { Article } from '../types/article-types';
 
 import { fetchArticles, fetchFullArticle } from './articleThunk';
 
@@ -36,6 +36,7 @@ const articlesSlice = createSlice({
         }
         return article;
       });
+      state.fullCurrentArticle = action.payload.article;
     },
   },
   extraReducers: builder => {

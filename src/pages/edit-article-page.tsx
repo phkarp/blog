@@ -5,9 +5,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { NewArticle } from '../components/new-article/new-article';
 import { getFullArticle, updateArticle } from '../services/articles';
 import { Loader } from '../components/loader/loader';
-import { UserLocalStorage } from '../types/user';
+import { UserLocalStorage } from '../types/user-types';
 
-export const EditArticle = () => {
+export const EditArticlePage = () => {
   const [currentArticle, setCurrentArticle] = useState();
   const { slug } = useParams();
   const navigate = useNavigate();

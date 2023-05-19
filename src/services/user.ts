@@ -1,4 +1,4 @@
-import { newUser, User, UserUpdate } from '../types/user';
+import { newUser, User, UserUpdate } from '../types/user-types';
 
 export const postNewUser = (newUser: newUser) => {
   return fetch('https://blog.kata.academy/api/users', {

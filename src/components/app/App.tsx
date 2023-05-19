@@ -2,17 +2,17 @@ import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import Header from '../header/header';
-import { ArticleFull } from '../article-full/article-full';
 import { useAppDispatch, useAppSelector } from '../../hooks/hook';
 import { fetchArticles } from '../../store/articleThunk';
-import { ArticlesList } from '../articles-list/articles-list';
-import { SignIn } from '../sign-in/sign-in';
-import { SignUp } from '../sign-up/sign-up';
-import { EditProfile } from '../edit-profile/edit-profile';
 import { fetchGetUser } from '../../store/userThunk';
 import { RequireAuth } from '../../hoc/RequireAuth';
-import { CreateArticle } from '../../pages/CreateArticle';
-import { EditArticle } from '../../pages/EditArticle';
+import { CreateArticlePage } from '../../pages/create-article-page';
+import { EditArticlePage } from '../../pages/edit-article-page';
+import { SignInPage } from '../../pages/sign-in-page';
+import { SignUpPage } from '../../pages/sign-up-page';
+import { ArticleListPage } from '../../pages/article-list-page';
+import { ArticleFullPage } from '../../pages/article-full-page';
+import { EditProfilePage } from '../../pages/edit-profile-page';
 
 import classes from './App.module.scss';
 
@@ -41,16 +41,16 @@ function App() {
     <div className={classes.App}>
       <Header />
       <Routes>
-        <Route path="/" element={<ArticlesList />} />
-        <Route path="/articles" element={<ArticlesList />} />
-        <Route path="/articles/:slug" element={<ArticleFull />} />
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/" element={<ArticleListPage />} />
+        <Route path="/articles" element={<ArticleListPage />} />
+        <Route path="/articles/:slug" element={<ArticleFullPage />} />
+        <Route path="/sign-in" element={<SignInPage />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
         <Route
           path="/profile"
           element={
             <RequireAuth>
-              <EditProfile />
+              <EditProfilePage />
             </RequireAuth>
           }
         />
@@ -58,7 +58,7 @@ function App() {
           path="/new-article"
           element={
             <RequireAuth>
-              <CreateArticle />
+              <CreateArticlePage />
             </RequireAuth>
           }
         />
@@ -66,7 +66,7 @@ function App() {
           path="/articles/:slug/edit"
           element={
             <RequireAuth>
-              <EditArticle />
+              <EditArticlePage />
             </RequireAuth>
           }
         />

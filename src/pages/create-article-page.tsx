@@ -5,7 +5,7 @@ import { NewArticle } from '../components/new-article/new-article';
 import { fetchCreateArticle } from '../store/articleThunk';
 import { useAppDispatch } from '../hooks/hook';
 
-export const CreateArticle = () => {
+export const CreateArticlePage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

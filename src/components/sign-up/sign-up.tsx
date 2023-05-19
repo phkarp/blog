@@ -1,18 +1,14 @@
 import { FC, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/hook';
-import { fetchNewUser } from '../../store/userThunk';
 import { addServerErrors } from '../../utils/addServerErrors';
+import { SignUpProps } from '../../types/props-types';
 
 import classes from './sign-up.module.scss';
 
-export const SignUp: FC = () => {
-  const dispatch = useAppDispatch();
-  const { regError } = useAppSelector(state => state.user);
-
-  const navigate = useNavigate();
+export const SignUp: FC<SignUpProps> = props => {
+  const { onSubmit, regError } = props;
 
   const {
     register,
@@ -23,25 +19,6 @@ export const SignUp: FC = () => {
   } = useForm({
     mode: 'all',
   });
-
-  const onSubmit = async (data: any) => {
-    const newUser = {
-      user: {
-        username: data.username,
-        email: data.email,
-        password: data.password,
-      },
-    };
-
-    const dataRequire = await dispatch(fetchNewUser(newUser));
-    if (!dataRequire.payload.errors) {
-      navigate('/sign-in');
-    }
-  };
-
-  const classNameError = (field: string) => {
-    return errors[field]?.message ? classes['input-error'] : '';
-  };
 
   useEffect(() => {
     if (!regError) return;
@@ -63,7 +40,7 @@ export const SignUp: FC = () => {
               minLength: { value: 3, message: 'Your username needs to be at least 3 characters.' },
               maxLength: { value: 20, message: 'Your username needs to be no more than 20 characters.' },
             })}
-            className={classNameError('username')}
+            className={errors.username ? classes['input-error'] : ''}
           />
           <div className={classes.error}>
             {errors?.username && <p>{errors.username?.message?.toString() || 'Error!'}</p>}
@@ -81,7 +58,7 @@ export const SignUp: FC = () => {
                 message: 'Entered value does not match email format',
               },
             })}
-            className={classNameError('email')}
+            className={errors.email ? classes['input-error'] : ''}
           />
           <div className={classes.error}>{errors.email && <p>{errors.email.message?.toString() || 'Error!'}</p>}</div>
         </label>
@@ -95,7 +72,7 @@ export const SignUp: FC = () => {
               minLength: { value: 6, message: 'Your password needs to be at least 6 characters.' },
               maxLength: { value: 40, message: 'Your password needs to be no more than 40 characters.' },
             })}
-            className={classNameError('password')}
+            className={errors.password ? classes['input-error'] : ''}
           />
           <div className={classes.error}>
             {errors.password && <p>{errors.password.message?.toString() || 'Error!'}</p>}
@@ -115,7 +92,7 @@ export const SignUp: FC = () => {
                 return password === value || 'Passwords must match!';
               },
             })}
-            className={classNameError('passwordRepeat')}
+            className={errors.passwordRepeat ? classes['input-error'] : ''}
           />
           <div className={classes.error}>
             {errors.passwordRepeat && <p>{errors.passwordRepeat.message?.toString() || 'Error!'}</p>}

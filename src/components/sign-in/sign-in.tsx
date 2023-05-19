@@ -1,16 +1,13 @@
 import { FC, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/hook';
-import { fetchGetToken } from '../../store/userThunk';
+import { SignInProps } from '../../types/props-types';
 
 import classes from './sign-in.module.scss';
 
-export const SignIn: FC = () => {
-  const dispatch = useAppDispatch();
-
-  const { logError } = useAppSelector(state => state.user);
+export const SignIn: FC<SignInProps> = props => {
+  const { onSubmit, logError } = props;
 
   const {
     register,
@@ -21,24 +18,6 @@ export const SignIn: FC = () => {
     mode: 'all',
   });
 
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const fromPage = location.state?.from?.pathname || '/';
-
-  const onSubmit = async (data: any) => {
-    const dataOfUser = {
-      user: {
-        email: data.email,
-        password: data.password,
-      },
-    };
-
-    const dataRequired = await dispatch(fetchGetToken(dataOfUser));
-
-    if (!dataRequired.payload.errors) navigate(fromPage);
-  };
-
   useEffect(() => {
     if (!logError) return;
 
@@ -47,10 +26,6 @@ export const SignIn: FC = () => {
       message: 'email or password is invalid',
     });
   }, [logError]);
-
-  const classNameError = (field: string) => {
-    return errors[field]?.message ? classes['input-error'] : '';
-  };
 
   return (
     <div className={classes['sign-in']}>
@@ -68,7 +43,7 @@ export const SignIn: FC = () => {
                 message: 'Entered value does not match email format',
               },
             })}
-            className={classNameError('email')}
+            className={errors.email ? classes['input-error'] : ''}
           />
           <div className={classes.error}>{errors.email && <p>{errors.email.message?.toString() || 'Error!'}</p>}</div>
         </label>
@@ -82,7 +57,7 @@ export const SignIn: FC = () => {
               minLength: { value: 6, message: 'Your password needs to be at least 6 characters.' },
               maxLength: { value: 40, message: 'Your password needs to be no more than 40 characters.' },
             })}
-            className={classNameError('password')}
+            className={errors.password ? classes['input-error'] : ''}
           />
           <div className={classes.error}>
             {errors.password && <p>{errors.password.message?.toString() || 'Error!'}</p>}

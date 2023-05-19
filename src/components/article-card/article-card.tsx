@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Tag } from 'antd';
 import { format } from 'date-fns';
 
-import { Article } from '../../types/article';
+import { Article } from '../../types/article-types';
 import { useAppDispatch } from '../../hooks/hook';
 import { fetchDeleteArticle } from '../../store/articleThunk';
 import { deleteFavorite, postFavorite } from '../../services/articles';
@@ -16,11 +16,10 @@ import attention from './exclamation-circle.svg';
 
 export const ArticleCard: FC<{ article: Article; fullArticle: boolean }> = props => {
   const { article, fullArticle } = props;
-  const [visiblePopUp, setVisiblePopUp] = useState(false);
-
   const { tagList, description, title, author, createdAt, slug, favoritesCount, favorited } = article;
-
   const { username, image } = author;
+
+  const [visiblePopUp, setVisiblePopUp] = useState(false);
 
   const navigate = useNavigate();
 
@@ -35,6 +34,7 @@ export const ArticleCard: FC<{ article: Article; fullArticle: boolean }> = props
   };
 
   const onFavorited = async () => {
+    console.log(1);
     const userFromLS = localStorage.getItem('user');
     if (!userFromLS) {
       navigate('/sign-in');

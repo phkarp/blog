@@ -1,23 +1,11 @@
 import { FC } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 
+import { NewArticleProps } from '../../types/props-types';
+
 import classes from './new-article.module.scss';
 
-type DefaultValues = {
-  title: string;
-  description: string;
-  body: string;
-  tagList: { name: string }[];
-  errors: object;
-};
-
-type PropsType = {
-  title: string;
-  submitHandler: (data: any) => void;
-  defaultValues?: DefaultValues;
-};
-
-export const NewArticle: FC<PropsType> = props => {
+export const NewArticle: FC<NewArticleProps> = props => {
   const { title, submitHandler, defaultValues } = props;
 
   const {

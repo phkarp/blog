@@ -1,7 +1,7 @@
 import { FieldValues } from 'react-hook-form';
 
-import { ResponseArticles } from '../types/article';
-import { User } from '../types/user';
+import { ResponseArticles } from '../types/article-types';
+import { User } from '../types/user-types';
 
 export const articles = async (offset = 0): Promise<ResponseArticles> => {
   const userFromLS = localStorage.getItem('user');

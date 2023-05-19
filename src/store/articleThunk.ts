@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { FieldValues } from 'react-hook-form';
 
-import { Article, ResponseArticles } from '../types/article';
+import { Article, ResponseArticles } from '../types/article-types';
 import { deleteArticle, articles, getFullArticle, postArticle } from '../services/articles';
 
 export const fetchArticles = createAsyncThunk('articles/fetchArticles', async function (offset: number) {

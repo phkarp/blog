@@ -1,20 +1,15 @@
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/hook';
-import { fetchUpdateUser } from '../../store/userThunk';
 import { addServerErrors } from '../../utils/addServerErrors';
+import { EditProfileProps } from '../../types/props-types';
 
 import classes from './edit-profile.module.scss';
 
-export const EditProfile: FC = () => {
-  const userFromStorage = localStorage.getItem('user');
+export const EditProfile: FC<EditProfileProps> = props => {
+  const { onSubmit, user, editError } = props;
 
-  if (!userFromStorage) return <div></div>;
-
-  const { username, email, image } = JSON.parse(userFromStorage);
-
-  const { editError } = useAppSelector(state => state.user);
+  const { username, email, image } = user;
 
   const {
     register,
@@ -22,32 +17,6 @@ export const EditProfile: FC = () => {
     formState: { errors },
     setError,
   } = useForm({ mode: 'all' });
-
-  const dispatch = useAppDispatch();
-  type EditedUser = {
-    email: string;
-    username: string;
-    image: string;
-    password?: string;
-  };
-
-  const onSubmit = async (data: any) => {
-    const editedUser: EditedUser = {
-      username: data.username,
-      email: data.email,
-      image: data.image,
-    };
-
-    if (data.password) {
-      editedUser.password = data.password;
-    }
-
-    await dispatch(fetchUpdateUser({ user: editedUser }));
-  };
-
-  const classNameError = (field: string) => {
-    return errors[field]?.message ? classes['input-error'] : '';
-  };
 
   useEffect(() => {
     if (!editError) return;
@@ -70,7 +39,7 @@ export const EditProfile: FC = () => {
               maxLength: { value: 20, message: 'Your username needs to be no more than 20 characters.' },
               value: username,
             })}
-            className={classNameError('username')}
+            className={errors.username ? classes['input-error'] : ''}
           />
           <div className={classes.error}>
             {errors?.username && <p>{errors.username?.message?.toString() || 'Error!'}</p>}
@@ -89,7 +58,7 @@ export const EditProfile: FC = () => {
               },
               value: email,
             })}
-            className={classNameError('email')}
+            className={errors.email ? classes['input-error'] : ''}
           />
           <div className={classes.error}>{errors.email && <p>{errors.email.message?.toString() || 'Error!'}</p>}</div>
         </label>
@@ -102,7 +71,7 @@ export const EditProfile: FC = () => {
               minLength: { value: 6, message: 'Your password needs to be at least 6 characters.' },
               maxLength: { value: 40, message: 'Your password needs to be no more than 40 characters.' },
             })}
-            className={classNameError('password')}
+            className={errors.password ? classes['input-error'] : ''}
           />
           <div className={classes.error}>
             {errors.password && <p>{errors.password.message?.toString() || 'Error!'}</p>}
@@ -120,7 +89,7 @@ export const EditProfile: FC = () => {
               },
               value: image,
             })}
-            className={classNameError('image')}
+            className={errors.image ? classes['input-error'] : ''}
           />
           <div className={classes.error}>{errors.image && <p>{errors.image.message?.toString() || 'Error!'}</p>}</div>
         </label>
