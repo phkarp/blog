@@ -11,8 +11,8 @@ import { SignUp } from '../sign-up/sign-up';
 import { EditProfile } from '../edit-profile/edit-profile';
 import { fetchGetUser } from '../../store/userThunk';
 import { RequireAuth } from '../../hoc/RequireAuth';
-import { CreateArticle } from '../../hoc/CreateArticle';
-import { EditArticle } from '../../hoc/EditArticle';
+import { CreateArticle } from '../../pages/CreateArticle';
+import { EditArticle } from '../../pages/EditArticle';
 
 import classes from './App.module.scss';
 
